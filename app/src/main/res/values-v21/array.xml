@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="state">
+        <item>AndhraPradesh</item>
+        <item>ArunachalPradesh</item>
+        <item>Assam</item>
+        <item>Bihar</item>
+        <item>Chhattisgarh</item>
+        <item>Gujarat</item>
+        <item>Haryana</item>
+        <item>HimachalPradesh</item>
+        <item>Jammu&amp;Kashmir</item>
+        <item>Jharkhand</item>
+        <item>Karnataka</item>
+        <item>Kerala</item>
+        <item>Madhya Pradesh</item>
+        <item>Maharashtra</item>
+        <item>Manipur</item>
+        <item>Meghalaya</item>
+        <item>Mizoram</item>
+        <item>Nagaland</item>
+        <item>Odisha</item>
+        <item>Punjab</item>
+        <item>Rajasthan</item>
+        <item>Sikkim</item>
+        <item>TamilNadu</item>
+        <item>Telangana</item>
+        <item>Tripura</item>
+        <item>Uttarakhand</item>
+        <item>UttarPradesh</item>
+        <item>WestBengal</item>
+    </string-array>
+    <string-array name="item_type">
+
+        <item>Pieces</item>
+        <item>Units</item>
+        <item>Meters</item>
+        <item>Litres</item>
+        <item>Kilograms</item>
+        <item>None</item>
+    </string-array>
+    <string-array name="Bill_type">
+        <item>Cash Payment</item>
+        <item>Cheque Payment</item>
+        <item>CreditCard Payment</item>
+        <item>DebitCard Payment</item>
+        <item>Online Payment</item>
+    </string-array>
+
+
+</resources>

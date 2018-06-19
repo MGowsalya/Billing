@@ -1,0 +1,4 @@
+-keep class com.itextpdf.** { *; }
+-dontwarn com.itextpdf.**
+-dontwarn okio.**
+-dontwarn retrofit2.Platform$Java8

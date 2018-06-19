@@ -1,0 +1,112 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+   >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+        android:id="@+id/category_edit_select"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="13dp"
+        android:layout_marginRight="13dp"
+        android:hint="@string/spinner_hint"
+        android:fontFamily="@font/segoeui"
+        android:textSize="15sp"
+        android:backgroundTint="@color/Grey"
+        style="@style/Widget.AppCompat.Spinner.Underlined"
+       />
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+        <EditText
+            android:id="@+id/category_edit_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/input_layout_name"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:fontFamily="@font/segoeui"
+            android:hint="Category Name"
+            android:backgroundTint="@color/Grey"
+            android:singleLine="true"
+            android:textSize="15sp" />
+    </android.support.design.widget.TextInputLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_margin="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:fontFamily="@font/segoeui"
+            android:layout_marginLeft="10dp"
+            android:text="Status :"
+            android:textSize="15sp" />
+        <TextView
+            android:id="@+id/enable_category_status"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginLeft="30dp"
+            android:fontFamily="@font/segoeui"
+            android:textSize="15sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="10dp">
+
+
+        <Button
+            android:id="@+id/category_edit_save"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginLeft="20dp"
+            android:textColor="@color/colorWhite"
+            android:background="@color/colorGreen"
+            android:textAllCaps="false"
+            android:textSize="15sp"
+            android:fontFamily="@font/segoeui"
+            android:text="@string/save" />
+
+        <Button
+            android:id="@+id/categoruy_edit_enable"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="20dp"
+            android:textColor="@color/colorWhite"
+            android:background="@color/colorRed"
+            android:textAllCaps="false"
+            android:textSize="15sp"
+            android:fontFamily="@font/segoeui"
+            android:text="@string/disable" />
+
+
+    </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

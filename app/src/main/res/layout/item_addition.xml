@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/scrollview"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:paddingTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/item_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15dp"
+                android:fontFamily="@font/segoeui"
+                android:singleLine="true"
+                android:backgroundTint="@color/Grey"
+                android:hint="@string/item_name_hint" />
+        </android.support.design.widget.TextInputLayout>
+
+        <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+            android:id="@+id/cate_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="13dp"
+            android:layout_marginRight="13dp"
+            android:hint="@string/item_category_name"
+            android:backgroundTint="@color/Grey"
+            android:textSize="15sp"
+            android:fontFamily="@font/segoeui"
+            />
+
+
+        <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+            android:id="@+id/item_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="13dp"
+            android:layout_marginRight="13dp"
+            android:hint="@string/item_type_hint"
+            android:backgroundTint="@color/Grey"
+            android:fontFamily="@font/segoeui"
+            android:textSize="15sp"
+            />
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/item_rate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:fontFamily="@font/segoeui"
+                android:textSize="15sp"
+                android:backgroundTint="@color/Grey"
+                android:hint="Rate" />
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/tax_add_ok_button_id"
+            android:text="Select tax"
+            android:background="@null"
+            android:fontFamily="@font/segoeui"
+            android:textSize="15sp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+        <!--<Button-->
+            <!--android:id="@+id/spinner_button_id"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" />-->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="0dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/item_hsc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:fontFamily="@font/segoeui"
+                android:textSize="15sp"
+                android:backgroundTint="@color/Grey"
+                android:hint="@string/item_hsc_hint" />
+        </android.support.design.widget.TextInputLayout>
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Favourite"
+            android:checked="false"
+            android:fontFamily="@font/segoeui"
+            android:id="@+id/item_favourite"
+            android:layout_gravity="start"
+            android:textSize="15sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
+        <Button
+            android:id="@+id/item_save"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="20dp"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:fontFamily="@font/segoeui"
+            android:layout_gravity="center"
+            android:textColor="@color/colorWhite"
+            android:background="@color/colorGreen"
+            android:textAllCaps="false"
+            android:text="@string/save" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

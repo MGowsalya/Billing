@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_dashboard"
+            android:title="DashBoard" />
+        <item
+            android:id="@+id/nav_category"
+            android:title="Category" />
+        <item
+            android:id="@+id/nav_tax"
+            android:title="Taxes" />
+        <item
+            android:id="@+id/nav_item"
+            android:title="Item" />
+        <item
+            android:id="@+id/nav_bill"
+            android:title="Billing" />
+        <item
+            android:id="@+id/nav_report"
+            android:title="Report" />
+        <item
+            android:id="@+id/nav_Devices"
+            android:title="Devices" />
+        <item
+            android:id="@+id/nav_Logout"
+            android:title="Logout" />
+
+
+    </group>
+
+
+
+</menu>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+
+    android:layout_marginTop="10dp"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <TextView
+        android:id="@+id/gridview_text"
+        android:gravity="center"
+        android:textSize="13sp"
+        android:padding="2dp"
+        android:fontFamily="@font/segoeui"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        xmlns:android="http://schemas.android.com/apk/res/android" />
+
+    <CheckBox
+        android:id="@+id/crossbar_id"
+        android:layout_width="30dp"
+        android:layout_marginLeft="2dp"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:gravity="center"
+        android:checked="true"
+        android:padding="2dp"
+        android:paddingBottom="2dp"
+        android:fontFamily="@font/segoeui"/>
+
+</LinearLayout>
+    <!--android:background="@drawable/border1"-->

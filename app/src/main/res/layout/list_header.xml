@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:id="@+id/list_header"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight = "1"
+            android:text="SNo"
+            android:textStyle="bold"
+            android:gravity = "center"
+            android:padding = "5dp"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight = "2"
+            android:gravity = "center"
+            android:padding = "5dp"
+            android:textStyle="bold"
+            android:text="Product"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight = "1.2"
+            android:gravity = "center"
+            android:padding = "5dp"
+            android:textStyle="bold"
+            android:text="Rate"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight = "1.2"
+            android:gravity = "center"
+            android:padding = "5dp"
+            android:textStyle="bold"
+            android:text="Qty"
+
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight = "1.2"
+            android:gravity = "center"
+            android:padding = "5dp"
+            android:textStyle="bold"
+            android:text="Amt"
+
+            />
+
+    </LinearLayout>
+
+
+
+    <!--   <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+           android:weightSum="2">
+       <TextView
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:text="Bill No:1234"
+           android:fontFamily="@font/cutivemono"
+           android:textSize="18dp"
+           android:layout_marginLeft="5dp"
+           android:id="@+id/bill_no"
+           android:textStyle="bold"
+           android:layout_weight="1.2"
+           />
+
+           <TextView
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+               android:fontFamily="@font/cutivemono"
+               android:textSize="18dp"
+               android:id="@+id/bill_date"
+               android:layout_weight="1"
+               android:textStyle="bold" />
+       </LinearLayout>
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+           android:layout_marginTop="5dp"
+          >
+
+
+       <TextView
+       android:layout_width="0dp"
+       android:layout_height="wrap_content"
+       android:text="SNo"
+       android:fontFamily="@font/cutivemono"
+       android:textSize="18dp"
+           android:layout_weight = "1"
+           android:gravity = "center"
+           android:padding = "5dp"
+           android:id="@+id/bill_sno"
+       android:textStyle="bold"
+
+       />
+       <TextView
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:text="Product"
+           android:fontFamily="@font/cutivemono"
+           android:textSize="18dp"
+           android:layout_weight = "2"
+           android:gravity = "center"
+           android:padding = "5dp"
+           android:id="@+id/bill_product"
+           android:textStyle="bold"
+
+           />
+       <TextView
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:text="Rate"
+           android:fontFamily="@font/cutivemono"
+           android:textSize="18dp"
+           android:layout_weight="1.2"
+           android:gravity = "center"
+           android:padding = "5dp"
+           android:id="@+id/bill_rate"
+           android:textStyle="bold"
+
+           />
+       <TextView
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:text="Qty"
+           android:fontFamily="@font/cutivemono"
+           android:textSize="18dp"
+           android:layout_weight="1.2"
+           android:gravity = "center"
+           android:padding = "5dp"
+           android:id="@+id/bill_qty"
+           android:textStyle="bold"
+
+           />
+       <TextView
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:text="Amt"
+           android:fontFamily="@font/cutivemono"
+           android:textSize="18dp"
+           android:layout_weight="1.2"
+           android:gravity = "center"
+           android:padding = "5dp"
+           android:id="@+id/bill_amt"
+           android:textStyle="bold"
+           />
+       </LinearLayout>
+   </LinearLayout>
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    >
+    <TableRow
+        android:id="@+id/tr_header"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <TextView
+            android:id="@+id/bill_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bill No:1234"
+            android:fontFamily="@font/cutivemono"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/bill_date"
+            android:layout_width="147dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="80dp"
+            android:fontFamily="@font/cutivemono"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+          </TableRow>
+</TableLayout>
+    <TableRow
+        android:id="@+id/tr_item_1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        >
+
+        <TextView
+            android:id="@+id/bill_sno"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/cutivemono"
+            android:text="SNo"
+            android:textStyle="bold"
+            android:textSize="18dp"
+            />
+
+        <TextView
+            android:id="@+id/bill_product"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/cutivemono"
+            android:textSize="18dp"
+            android:text="Product"
+            android:textStyle="bold"
+            android:layout_marginLeft="5dp"
+            />
+      <TextView
+
+          android:layout_width="50dp"
+          android:layout_height="wrap_content"
+          android:fontFamily="@font/cutivemono"
+          android:text="Rate"
+          android:id="@+id/bill_rate"
+          android:layout_marginLeft="2dp"
+          android:textStyle="bold"
+          android:textSize="18dp"
+          />
+
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/cutivemono"
+            android:layout_marginLeft="5dp"
+            android:text="Qty"
+            android:id="@+id/bill_qty"
+            android:textStyle="bold"
+            android:textSize="18dp"
+              />
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:fontFamily="@font/cutivemono"
+              android:text="Amt"
+              android:id="@+id/bill_amt"
+              android:layout_marginLeft="2dp"
+              android:textStyle="bold"
+              android:textSize="18dp"
+              />
+  </TableRow>
+</LinearLayout>-->

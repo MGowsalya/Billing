@@ -1,0 +1,9 @@
+<TextView
+    android:id="@+id/gridvi"
+    android:textSize="15dp"
+    android:textAppearance="@font/segoeui"
+    android:layout_width="100dp"
+    android:layout_height="80dp"
+    android:gravity="center"
+    android:background="@drawable/border"
+    xmlns:android="http://schemas.android.com/apk/res/android" />

@@ -1,0 +1,77 @@
+<resources>
+    <string name="app_name">My demo</string>
+    <string name="title_activity_second">SecondActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="header_name">S S Stores</string>
+    <string name="spinner_hint">Category Name</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="company_name_hint">Company Name</string>
+    <string name="company_address_hint">Address</string>
+    <string name="company_place_hint">Place</string>
+    <string name="company_state_hint">State</string>
+    <string name="company_postal_hint">Postal Code</string>
+    <string name="company_Gst_hint">Gst No</string>
+    <string name="company_phonenum_hint">Phone Number</string>
+    <string name="company_email_hint">Email</string>
+    <string name="company_mobile_hint">Mobile Number</string>
+    <string name="company_bill_hint">Bill Prefix</string>
+    <string name="save">Save</string>
+    <string name="disable">Disable</string>
+    <string name="facebook_app_id">1989004701372625</string>
+
+    <string name="item_name_hint">Item Name</string>
+    <string name="item_type_hint">Item Type</string>
+    <string name="item_decimal_hint">No of Decimals</string>
+    <string name="item_hsc_hint">Hsn Code</string>
+    <string name="item_igst_hint">IGST</string>
+    <string name="item_sgst_hint">SGST</string>
+    <string name="item_cgst_hint">CGST</string>
+    <string name="item_check_text">Company List</string>
+    <string name="item_company_hint">Company List</string>
+    <string name="item_category_name">Category_name</string>
+
+    <string name="bt_not_enabled_leaving">Bluetooth was not enabled. Leaving Bluetooth.</string>
+    <string name="scanning">scanning for devices...</string>
+    <string name="select_device">select a device to connect</string>
+    <string name="none_paired">No devices have been paired</string>
+    <string name="none_found">No devices found</string>
+    <string name="title_paired_devices">Paired Devices</string>
+    <string name="title_other_devices">Other Available Devices</string>
+    <string name="button_scan">Scan for devices</string>
+
+    <!-- Options Menu -->
+    <string name="connect">Connect a device</string>
+    <string name="discoverable">Make discoverable</string>
+    <!--  BluetoothChat -->
+    <string name="send">Print</string>
+    <string name="not_connected">You are not connected to a device</string>
+    <string name="title_connecting">connecting...</string>
+    <string name="title_connected_to">connected: </string>
+    <string name="title_not_connected">not connected</string>
+    <string name="title_activity_list_paired_devices">ListPairedDevicesActivity</string>
+
+    <string name="msg">Please enable all permission</string>
+
+
+        <string name="option_select">Choose objects</string>
+
+        <string-array name="object_array">
+            <item>Select one</item>
+            <item>Gallery</item>
+            <item>Apple</item>
+            <item>Fruits</item>
+            <item>Stationery</item>
+        </string-array>
+
+        <integer-array name="object_image">
+            <item>@drawable/selection</item>
+            <item>@drawable/orange</item>
+            <item>@drawable/apples</item>
+            <item>@drawable/fruits_img</item>
+            <item>@drawable/stationery</item>
+        </integer-array>
+
+    </resources>
