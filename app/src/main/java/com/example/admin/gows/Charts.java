@@ -211,21 +211,21 @@ public class Charts extends Fragment{
         for(int i=0;i<pricelist.size();i++)
         {
             BarEntry.add(new BarEntry(Float.valueOf(String.valueOf(pricelist.get(i))), i));
-            datelist.add(datelist.get(i));
+          //  datelist.add(datelist.get(i));
         }
         BarData data = new BarData(datelist,dataSet);
         data.setValueTextSize(10f);
         dataSet.setColors(ColorTemplate.VORDIPLOM_COLORS);
      //   data.setBarWidth(0.8f);
         barChart.setData(data);
-        barChart.setVisibleXRangeMaximum(4);
+        barChart.setVisibleXRangeMaximum(6);
         barChart.animateXY(2000,2000);
         barChart.setDrawBorders(true);
         barChart.setPinchZoom(false);
         barChart.setBorderColor(R.color.colorBlack);
         final XAxis xAxis = barChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setLabelRotationAngle(10);
+       // xAxis.setLabelRotationAngle(10);
 
 //        Legend l = barChart.getLegend();
 //        l.setEnabled(true);
@@ -262,8 +262,12 @@ public class Charts extends Fragment{
              //   String select = "SELECT Created_date from Item "
 
 
-           // String select = "SELECT Created_date,sum(Total_Price) FROM Item GROUP BY Created_date HAVING sum(Total_Price)= '"+value+"'";
-              String select = "SELECT Created_date,sum(Total_Price) FROM Item GROUP BY Created_date HAVING sum(Total_Price)="+val;
+                XAxis xAxis = barChart.getXAxis();
+                String x =  xAxis.getValues().get(e.getXIndex());
+                String select = "SELECT Created_date,sum(Total_Price) FROM Item  where Created_date ='"+x+"' GROUP BY Created_date HAVING sum(Total_Price)="+val ;
+
+                // String select = "SELECT Created_date,sum(Total_Price) FROM Item GROUP BY Created_date HAVING sum(Total_Price)= '"+value+"'";
+         //     String select = "SELECT Created_date,sum(Total_Price) FROM Item GROUP BY Created_date HAVING sum(Total_Price)="+val;
 
                 //  String select = "SELECT Item_Name,sum(Total_Price) FROM Item GROUP BY Created_date HAVING sum(Total_Price)=690";
                 Cursor cursor = db.rawQuery(select,null);
