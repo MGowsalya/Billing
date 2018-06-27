@@ -53,9 +53,6 @@ public class  Bill_edit extends Fragment {
 
         db.execSQL("create table if not exists Billing(ID bigint(20),Bill_no  bigint(11),bdate date,pcode int," +
                 "Product Varchar,Rate float,Tax int,Qty int,Amount float,Total float,Created_date Date,Created_time time,Enable int)");
-        db.execSQL("create table if not exists Item (Item_Code integer primary key autoincrement ,Item_Name text ," +
-                "Category_Code int,Item_Type varchar,Tax1 varchar,Tax2 varchar,Tax3 varchar,Tax4 varchar,Rate float," +
-                "HSNcode varchar(50),Total_Price float,Tax_Price float,Created_date Date,Created_time time,Enable int,Favour int);");
         mStringList.clear();
 
         final String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());

@@ -1,15 +1,17 @@
 package com.example.admin.gows;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +20,6 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -31,9 +32,13 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 public class Charts extends Fragment{
     SQLiteDatabase db;
@@ -48,7 +53,10 @@ public class Charts extends Fragment{
     String standard_date="";
     HashMap<String, String> hashMap = new HashMap<>();
     String piechart_date;
- //   ShimmerFrameLayout shimmerFrameLayout;
+    String strDate1,strDate2;
+    //   ShimmerFrameLayout shimmerFrameLayout;
+    String names = "Item",concat,date,time;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -56,8 +64,7 @@ public class Charts extends Fragment{
         getActivity().setTitle("Charts");
         db = getActivity().openOrCreateDatabase("Master.db", Context.MODE_PRIVATE, null);
         db.execSQL("create table if not exists Item (Item_Code integer primary key autoincrement ,Item_Name text ," +
-                "Category_Code int,Item_Type varchar,Tax1 varchar,Tax2 varchar,Tax3 varchar,Tax4 varchar,Rate float," +
-                "HSNcode varchar(50),Total_Price float,Tax_Price float,Created_date Date,Created_time time,Enable int,Favour int,Tax_Percent float);");
+                "Category_Code int,Item_Type varchar,Taxes varchar,Rate float," + "HSNcode varchar(50),Total_Price float,Tax_Price float,Created_date Date,Created_time time,Enable int,Favour int,Tax_Percent float);");
 
         fromdate_button = v.findViewById(R.id.fromdate_button);
         todate_button = v.findViewById(R.id.todate_button);
@@ -66,15 +73,21 @@ public class Charts extends Fragment{
         pieChart = v.findViewById(R.id.pie_id);
         t1 = v.findViewById(R.id.text_id);
         t2 = v.findViewById(R.id.text1_id);
+        // Date & Time
+        date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        Calendar calendar = Calendar.getInstance();
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat mdformat = new SimpleDateFormat("HH:mm:ss");
+        time = mdformat.format(calendar.getTime());
+        insert();
 //         shimmerFrameLayout =
 //                (ShimmerFrameLayout) v.findViewById(R.id.shimmer_view_container);
 
-         fromdate_button.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View view) {
-                 showFromDatePicker();
-             }
-         });
+        fromdate_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showFromDatePicker();
+            }
+        });
 
         todate_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,22 +99,22 @@ public class Charts extends Fragment{
             @Override
             public void onClick(View view) {
 
-             //   shimmerFrameLayout.startShimmerAnimation();
+                //   shimmerFrameLayout.startShimmerAnimation();
                 namelist.clear();
                 pricelist.clear();
                 datelist.clear();
                 t1.setVisibility(View.INVISIBLE);
                 t2.setVisibility(View.VISIBLE);
                 trial();
-            //    Toast.makeText(getContext(),"date : "+fromdate_button.getText(),Toast.LENGTH_SHORT).show();
-             //   data();
+                //    Toast.makeText(getContext(),"date : "+fromdate_button.getText(),Toast.LENGTH_SHORT).show();
+                //   data();
                 drawBarchart();
-               // drawPieChart();
+                // drawPieChart();
             }
         });
 
 
-    return v;
+        return v;
     }
 //    void data()
 //    {
@@ -207,26 +220,28 @@ public class Charts extends Fragment{
     void drawBarchart()
     {
         ArrayList<BarEntry> BarEntry = new ArrayList<>();
-        BarDataSet dataSet = new BarDataSet(BarEntry, "Sales");
+        BarDataSet dataSet = new BarDataSet(BarEntry, "Product Entry");
         for(int i=0;i<pricelist.size();i++)
         {
             BarEntry.add(new BarEntry(Float.valueOf(String.valueOf(pricelist.get(i))), i));
-          //  datelist.add(datelist.get(i));
+            // datelist.add(datelist.get(i));
         }
         BarData data = new BarData(datelist,dataSet);
         data.setValueTextSize(10f);
         dataSet.setColors(ColorTemplate.VORDIPLOM_COLORS);
-     //   data.setBarWidth(0.8f);
+        //   data.setBarWidth(0.8f);
         barChart.setData(data);
-        barChart.setVisibleXRangeMaximum(6);
+        barChart.setVisibleXRangeMaximum(4);
         barChart.animateXY(2000,2000);
         barChart.setDrawBorders(true);
         barChart.setPinchZoom(false);
         barChart.setBorderColor(R.color.colorBlack);
         final XAxis xAxis = barChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-       // xAxis.setLabelRotationAngle(10);
+        //xAxis.setLabelRotationAngle(10);
 
+        String values = xAxis.getValues().toString();
+        // Toast.makeText(getContext(), "values: "+values, Toast.LENGTH_SHORT).show();
 //        Legend l = barChart.getLegend();
 //        l.setEnabled(true);
 //        l.setForm(Legend.LegendForm.SQUARE);
@@ -243,31 +258,26 @@ public class Charts extends Fragment{
         barChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
-               // shimmerFrameLayout.clearAnimation();
-                t1.setVisibility(View.VISIBLE);
+//                Toast.makeText(getContext(), "highlight: "+h, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "dataSetIndex: "+dataSetIndex, Toast.LENGTH_LONG).show();
+//                Toast.makeText(getContext(), "Entry: "+e, Toast.LENGTH_SHORT).show();
 
+
+                // shimmerFrameLayout.clearAnimation();
+                t1.setVisibility(View.VISIBLE);
+                XAxis xAxis = barChart.getXAxis();
+                String x =  xAxis.getValues().get(e.getXIndex());
 
 //                barChart.setDrawBarShadow(true);
 //                barChart.invalidate();
                 //shimmerFrameLayout.stopShimmerAnimation();
                 Float value = Float.valueOf(e.getVal());
                 String val = String.valueOf(value);
-             //   Toast.makeText(getContext(), "key: "+value, Toast.LENGTH_SHORT).show();
-
-//                SELECT NAME, SUM(SALARY) FROM Employee
-//                GROUP BY NAME
-//                HAVING SUM(SALARY)>3000;
-
-                //Float agk = 690f;
-             //   String select = "SELECT Created_date from Item "
-
-
-                XAxis xAxis = barChart.getXAxis();
-                String x =  xAxis.getValues().get(e.getXIndex());
-                String select = "SELECT Created_date,sum(Total_Price) FROM Item  where Created_date ='"+x+"' GROUP BY Created_date HAVING sum(Total_Price)="+val ;
 
                 // String select = "SELECT Created_date,sum(Total_Price) FROM Item GROUP BY Created_date HAVING sum(Total_Price)= '"+value+"'";
-         //     String select = "SELECT Created_date,sum(Total_Price) FROM Item GROUP BY Created_date HAVING sum(Total_Price)="+val;
+                String select = "SELECT Created_date,sum(Total_Price) FROM Item  where Created_date ='"+x+"' GROUP BY Created_date HAVING sum(Total_Price)="+val ;
+
+                // String select = "SELECT Created_date,sum(Total_Price) FROM Item GROUP BY Created_date HAVING sum(Total_Price)="+val ;
 
                 //  String select = "SELECT Item_Name,sum(Total_Price) FROM Item GROUP BY Created_date HAVING sum(Total_Price)=690";
                 Cursor cursor = db.rawQuery(select,null);
@@ -275,7 +285,7 @@ public class Charts extends Fragment{
                     do{
                         piechart_date = cursor.getString(0);
                         Float sum = cursor.getFloat(1);
-                      //  Toast.makeText(getContext(), "succeded!!"+sum, Toast.LENGTH_SHORT).show();
+                        //  Toast.makeText(getContext(), "succeded!!"+sum, Toast.LENGTH_SHORT).show();
                     }while (cursor.moveToNext());
                 }
                 ArrayList piechart_name = new ArrayList();
@@ -286,7 +296,7 @@ public class Charts extends Fragment{
                     do{
                         String name = cursor1.getString(0);
                         String price = cursor1.getString(1);
-                     //   Toast.makeText(getContext(), "succeded!!gm", Toast.LENGTH_SHORT).show();
+                        //   Toast.makeText(getContext(), "succeded!!gm", Toast.LENGTH_SHORT).show();
                         piechart_name.add(name);
                         piechart_total_price.add(price);
                     }while (cursor1.moveToNext());
@@ -300,8 +310,10 @@ public class Charts extends Fragment{
                 }
                 PieData data = new PieData(piechart_name,dataSet);
                 data.setValueTextSize(8f);
-                dataSet.setColors(ColorTemplate.VORDIPLOM_COLORS);
+                dataSet.setColors(ColorTemplate.JOYFUL_COLORS);
                 pieChart.setData(data);
+
+//                pieChart.setTransparentCircleRadius(20);
                 pieChart.setCenterText(piechart_date);
                 pieChart.setCenterTextSize(15);
                 pieChart.setHoleColor(Color.rgb(210, 223, 224));
@@ -326,7 +338,7 @@ public class Charts extends Fragment{
 //            }
 //        });
     }
-//    void drawPieChart()
+    //    void drawPieChart()
 //    {
 //        ArrayList<Entry> PieEntry = new ArrayList<>();
 //        PieDataSet dataSet = new PieDataSet(PieEntry, "Products");
@@ -344,10 +356,15 @@ public class Charts extends Fragment{
     void trial()
     {
         String from = fromdate_button.getText().toString();
+        strDate1 = from;
         String to = todate_button.getText().toString();
-      //  String select = "SELECT Item_Name,sum(Total_Price),Created_date from Item GROUP BY Created_date";//='"+from+"'";
+        strDate2 = to;
+        dateFormat();
+        // Toast.makeText(getContext(), "from and to: "+from+" "+to, Toast.LENGTH_SHORT).show();
+        //  String select = "SELECT Item_Name,sum(Total_Price),Created_date from Item GROUP BY Created_date";//='"+from+"'";
+        //  String select = "SELECT Item_Name,Total_Price,Created_date from Item where Created_date BETWEEN '"+from+"' AND '"+to+"' ";//Order By Created_date";
         String select = "SELECT Item_Name,sum(Total_Price),Created_date from Item  where" +
-                " Created_date BETWEEN '" + from + "' AND '" + to + "' GROUP BY Created_date";//='"+from+"'";
+                " Created_date BETWEEN '" + strDate1 + "' AND '" + strDate2 + "' GROUP BY Created_date Order by Created_date " ;//='"+from+"'";
         Cursor cc = db.rawQuery(select, null);
         if (cc.moveToFirst())
         {
@@ -359,9 +376,9 @@ public class Charts extends Fragment{
                 namelist.add(n);
                 pricelist.add(tp);
                 datelist.add(date);
-//                Log.d("date:","d: "+name);
-//                Log.d("name:","d: "+price);
-//                Log.d("price:","d: "+datel);
+                Log.d("date:","name: "+namelist.toString());
+                Log.d("name:","price: "+pricelist.toString());
+                Log.d("price:","date: "+datelist.toString());
 //                Toast.makeText(getContext(),"gd : "+date,Toast.LENGTH_SHORT).show();
 //                Toast.makeText(getContext(),"gn : "+n,Toast.LENGTH_SHORT).show();
 //                Toast.makeText(getContext(),"gp : "+tp,Toast.LENGTH_SHORT).show();
@@ -370,4 +387,117 @@ public class Charts extends Fragment{
             cc.close();
         }
     }
+    private void dateFormat() {
+
+        Log.e("TAG","original format: "+strDate1);
+        Log.e("TAG","original format2: "+strDate2);
+
+        try
+        {
+            //create SimpleDateFormat object with source string date format
+            SimpleDateFormat sdfSource = new SimpleDateFormat("dd-MM-yyyy");
+
+            //parse the string into Date object
+            Date date = sdfSource.parse(strDate1);
+            Date date2 = sdfSource.parse(strDate2);
+
+            //create SimpleDateFormat object with desired date format
+            SimpleDateFormat sdfDestination = new SimpleDateFormat("yyyy-MM-dd");
+
+            //parse the date into another format
+            strDate1 = sdfDestination.format(date);
+            strDate2 = sdfDestination.format(date2);
+            //  date_list.add(strDate1);
+            Log.e("TAG","converted format: "+strDate1);
+            Log.e("TAG","converted format2: "+strDate2);
+
+        }
+        catch(ParseException pe)
+        {
+            System.out.println("Parse Exception : " + pe);
+        }
+
+    }
+    public boolean rowIdExists(String name) {
+        String select = "select Item_Name from Item ";
+        Cursor cursor = db.rawQuery(select, null);
+        List<String> labels = new ArrayList<String>();
+        if (cursor.moveToFirst()) {
+            do {
+                String var = cursor.getString(0);
+                labels.add(var);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        boolean allMatch = true;
+        for (String string : labels) {
+            if (string.equalsIgnoreCase(name)) {
+                allMatch = false;
+                break;
+            }
+        }
+        return allMatch;
+    }
+    private void insert(){
+        String cat_code = "1";
+        String type = "Pieces";
+        String tax = "gst,cgst";
+        String tax1 = "tax1,tax2";
+        String rate = "200";
+        String hsn = "36";
+        String total = "208";
+        String favor = "1";
+        String enable = "1";
+        //String total_tax =
+        for(int n=0; n<5; n++){
+            concat = names + n;
+            ContentValues values =new ContentValues();
+            values.put("Item_Name", concat);
+            values.put("Category_Code", cat_code);
+            values.put("Item_Type", type);
+            values.put("Taxes", tax);
+            values.put("Rate", rate);
+            values.put("Hsncode", hsn);
+            values.put("Total_Price", total);
+            values.put("Tax_Price", 8);
+            values.put("Created_date", "2018-05-02");
+            values.put("Created_time",time );
+            values.put("Enable", enable);
+            values.put("Favour", favor);
+            values.put("Tax_Percent", 2);
+
+            if(rowIdExists(concat)){
+                db.insert("Item",null,values);
+            }
+            else {
+                //  Toast.makeText(getContext(), "exists..", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        for(int i=5; i<10; i++){
+            concat = names + i;
+            ContentValues values =new ContentValues();
+            values.put("Item_Name", concat);
+            values.put("Category_Code", 2);
+            values.put("Item_Type", "None");
+            values.put("Taxes", tax1);
+            values.put("Rate", 300);
+            values.put("Hsncode", hsn);
+            values.put("Total_Price", 312);
+            values.put("Tax_Price", 12);
+            values.put("Created_date", "2018-05-05");
+            values.put("Created_time",time );
+            values.put("Enable", enable);
+            values.put("Favour", favor);
+            values.put("Tax_Percent", 3);
+
+            if(rowIdExists(concat)){
+                db.insert("Item",null,values);
+            }
+            else {
+                //  Toast.makeText(getContext(), "exists..", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 }
+

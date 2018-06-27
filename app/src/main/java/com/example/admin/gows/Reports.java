@@ -156,7 +156,7 @@ public class Reports extends android.support.v4.app.Fragment {
                 if (curs_count != 0) {
                  //   list_header.setVisibility(View.VISIBLE);
                     download_button.setVisibility(View.VISIBLE);
-                    Toast.makeText(getContext(), "done", Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(getContext(), "done", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getContext(), "No Entries Found ", Toast.LENGTH_SHORT).show();
                  //   list_header.setVisibility(View.INVISIBLE);

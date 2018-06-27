@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/com.example.admin.gows"
-    android:background="@color/colorWhite">
+    >
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     <Button
         android:id="@+id/fromdate_button"
-        android:text="02-05-2018"
+        android:text="From"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:gravity="center"
@@ -19,7 +19,7 @@
 
         <Button
             android:id="@+id/todate_button"
-            android:text="31-05-2018"
+            android:text="To"
             android:layout_marginStart="135dp"
             android:layout_marginTop="10dp"
             android:layout_alignParentLeft="true"

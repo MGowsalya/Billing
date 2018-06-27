@@ -177,7 +177,7 @@ public class SiginActivity extends AppCompatActivity implements FacebookResponse
 
     @Override
     public void onGoogleAuthSignIn(GoogleAuthUser user) {
-        Toast.makeText(this, "Google user data: name= " + user.name + " email= " + user.email, Toast.LENGTH_SHORT).show();
+      //  Toast.makeText(this, "Google user data: name= " + user.name + " email= " + user.email, Toast.LENGTH_SHORT).show();
         String nameg =  user.name;
         String emailg = user.email;
         int logintype = 2;
@@ -189,12 +189,12 @@ public class SiginActivity extends AppCompatActivity implements FacebookResponse
 
     @Override
     public void onGoogleAuthSignInFailed() {
-        Toast.makeText(this, "Google sign in failed.", Toast.LENGTH_SHORT).show();
+    //    Toast.makeText(this, "Google sign in failed.", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onGoogleAuthSignOut(boolean isSuccess) {
-        Toast.makeText(this, isSuccess ? "Sign out success" : "Sign out failed", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, isSuccess ? "Sign out success" : "Sign out failed", Toast.LENGTH_SHORT).show();
 
     }
 

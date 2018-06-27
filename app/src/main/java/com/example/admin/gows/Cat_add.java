@@ -47,6 +47,7 @@ public class Cat_add extends Fragment {
     Button category_save;
     String enable = "1";
     SQLiteDatabase db;
+    String names = "category",concat,date,time;
 
 //    Spinner category_spinner;
 //    private String[] listOfObjects;
@@ -61,12 +62,13 @@ public class Cat_add extends Fragment {
         db = getActivity().openOrCreateDatabase("Master.db",android.content.Context.MODE_PRIVATE ,null);
         db.execSQL("create table if not exists Category (Category_Code Integer primary key autoincrement ,Name Varchar," +
                 "Created_date Date,Created_time Time,Enable int)");
-        final String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+        date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat mdformat = new SimpleDateFormat("HH:mm:ss");
-        final String time =  mdformat.format(calendar.getTime());
+        time =  mdformat.format(calendar.getTime());
         category_name =view.findViewById(R.id.cat_name);
         category_save = view.findViewById(R.id.cat_save);
+        insert();
 
 
 //        itemImage = view.findViewById(R.id.images);
@@ -118,7 +120,7 @@ public class Cat_add extends Fragment {
 
                 final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
-             //   Toast.makeText(getApplicationContext(),"keyboard: "+imm,Toast.LENGTH_SHORT).show();
+                //   Toast.makeText(getApplicationContext(),"keyboard: "+imm,Toast.LENGTH_SHORT).show();
 
 //                Opening gallery directly from app
 //                Intent intent = new Intent();
@@ -161,7 +163,7 @@ public class Cat_add extends Fragment {
                         if (bs == false) {
                             Toast.makeText(getActivity(),"Alphabetical letters are only accepted",Toast.LENGTH_SHORT).show();
                         }  else {
-                       //     Toast.makeText(getActivity(), "ok", Toast.LENGTH_SHORT).show();
+                            //     Toast.makeText(getActivity(), "ok", Toast.LENGTH_SHORT).show();
                             db.insert("Category", null, values);
                             final AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
                             alertDialog.setMessage("Category" + " " + category_name.getText() + " has been added");
@@ -191,7 +193,7 @@ public class Cat_add extends Fragment {
         });
         return view;
     }
-//    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    //    public void onActivityResult(int requestCode, int resultCode, Intent data)
 //    {
 //        super.onActivityResult(requestCode, resultCode, data);
 //        if (requestCode == SELECT_IMAGE)
@@ -246,6 +248,30 @@ public class Cat_add extends Fragment {
         }
         return allMatch;
     }
+    private void insert(){
+        int code = 1,previous=0;
 
+        for (int n = 0; n < 5; n++) {
+            concat = names + n;
+//            int calc = previous + code;
+//            previous = calc;
+            //   Toast.makeText(getApplicationContext(), "name:" + concat, Toast.LENGTH_SHORT).show();
+
+            //   Toast.makeText(getApplicationContext(), "percent:" + previous, Toast.LENGTH_SHORT).show();
+            ContentValues cv = new ContentValues();
+            cv.put("Name", concat);
+            cv.put("Created_date", date);
+            cv.put("Created_time", time);
+            cv.put("Enable", enable);
+            if(rowIdExists(concat)) {
+                db.insert("Category", null, cv);
+            }
+            else {
+                //  Toast.makeText(getContext(), "Tax Name Already Used", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+
+    }
 
 }

@@ -45,16 +45,13 @@ public class Dashboard extends Fragment {
         getActivity().setTitle("DashBoard");
 
         db = getActivity().openOrCreateDatabase("Master.db", Context.MODE_PRIVATE, null);
-        db.execSQL("create table if not exists Item (Item_Code integer primary key autoincrement ,Item_Name text ," +
-                "Category_Code int,Item_Type varchar,Tax1 varchar,Tax2 varchar,Tax3 varchar,Tax4 varchar,Rate float," +
-                "HSNcode varchar(50),Total_Price float,Tax_Price float,Created_date Date,Created_time time,Enable int,Favour int,Tax_Percent float);");
 
         barChart = v.findViewById(R.id.BarChart);
         pieChart = v.findViewById(R.id.pie);
         lineChart = v.findViewById(R.id.linechart);
 
-        getDetails();
-        getTotalprice();
+      //  getDetails();
+     //   getTotalprice();
 //        drawBarchart();
 //        drawPieChart();
       //  drawLinechart();
@@ -63,87 +60,87 @@ public class Dashboard extends Fragment {
         return v;
     }
 
-    void getDetails()
-    {
-        String select = "SELECT Item_Name from Item";
-        Cursor cc = db.rawQuery(select, null);
-        if (cc.moveToFirst())
-        {
-            do
-            {
-                item_name = cc.getString(0);
-                arrayList.add(item_name);
-                //   Toast.makeText(getContext(),"name : "+list.toString(),Toast.LENGTH_SHORT).show();
-            } while (cc.moveToNext());
-            Log.d("gg", "values: " + arrayList.toString());
-            cc.close();
-        }
-    }
-
-    void getTotalprice()
-    {
-        Float price = 0.0f;
-        int n =0;
-        String select = "SELECT Total_Price from Item";// where Item_Name = '"+item_name+"'";
-        Cursor cc = db.rawQuery(select, null);
-        if (cc.moveToFirst())
-        {
-            do
-            {
-                price = cc.getFloat(0);
-                pricelist.add(price);
-
-//                    pp[n] = price;
+//    void getDetails()
+//    {
+//        String select = "SELECT Item_Name from Item";
+//        Cursor cc = db.rawQuery(select, null);
+//        if (cc.moveToFirst())
+//        {
+//            do
+//            {
+//                item_name = cc.getString(0);
+//                arrayList.add(item_name);
+//                //   Toast.makeText(getContext(),"name : "+list.toString(),Toast.LENGTH_SHORT).show();
+//            } while (cc.moveToNext());
+//            Log.d("gg", "values: " + arrayList.toString());
+//            cc.close();
+//        }
+//    }
 //
-//                    n++;
-//                    drawBarchart();
-
-            } while (cc.moveToNext());
-
-            Log.d("gkk", "price: " + pricelist.toString());
-            cc.close();
-        }
-
-    }
-    void drawBarchart(){
-        ArrayList<BarEntry> BarEntry = new ArrayList<>();
-        BarDataSet dataSet = new BarDataSet(BarEntry, "Products");
-        //    dataSet.setBarSpacePercent(50);
-
-
-        for(int i=0;i<pricelist.size();i++){
-            BarEntry.add(new BarEntry(Float.valueOf(String.valueOf(pricelist.get(i))), i));
-            arrayList.add(arrayList.get(i));
-        }
-        BarData data = new BarData(arrayList,dataSet);
-        dataSet.setColors(ColorTemplate.VORDIPLOM_COLORS);
-        // barChart.setBackgroundColor(rgb(68, 112, 85));
-        barChart.setData(data);
-        barChart.setVisibleXRangeMaximum(4);
-     //   barChart.setDescription("Rate of Products");
-        //  barChart.animateX(2000);
-        barChart.animateXY(2000,2000);
-    }
-    void drawPieChart()
-    {
-        ArrayList<Entry> PieEntry = new ArrayList<>();
-        PieDataSet dataSet = new PieDataSet(PieEntry, "Products");
-        //    dataSet.setBarSpacePercent(50);
-
-        for(int i=0;i<pricelist.size();i++){
-            PieEntry.add(new Entry(Float.valueOf(String.valueOf(pricelist.get(i))), i));
-            arrayList.add(arrayList.get(i));
-        }
-
-        PieData data = new PieData(arrayList,dataSet);
-        dataSet.setColors(ColorTemplate.VORDIPLOM_COLORS);
-        // barChart.setBackgroundColor(rgb(68, 112, 85));
-        pieChart.setData(data);
-      //  pieChart.setDescription("Rate of Products");
-        //  barChart.animateX(2000);
-        pieChart.animateXY(2000,2000);
-
-    }
+//    void getTotalprice()
+//    {
+//        Float price = 0.0f;
+//        int n =0;
+//        String select = "SELECT Total_Price from Item";// where Item_Name = '"+item_name+"'";
+//        Cursor cc = db.rawQuery(select, null);
+//        if (cc.moveToFirst())
+//        {
+//            do
+//            {
+//                price = cc.getFloat(0);
+//                pricelist.add(price);
+//
+////                    pp[n] = price;
+////
+////                    n++;
+////                    drawBarchart();
+//
+//            } while (cc.moveToNext());
+//
+//            Log.d("gkk", "price: " + pricelist.toString());
+//            cc.close();
+//        }
+//
+//    }
+//    void drawBarchart(){
+//        ArrayList<BarEntry> BarEntry = new ArrayList<>();
+//        BarDataSet dataSet = new BarDataSet(BarEntry, "Products");
+//        //    dataSet.setBarSpacePercent(50);
+//
+//
+//        for(int i=0;i<pricelist.size();i++){
+//            BarEntry.add(new BarEntry(Float.valueOf(String.valueOf(pricelist.get(i))), i));
+//            arrayList.add(arrayList.get(i));
+//        }
+//        BarData data = new BarData(arrayList,dataSet);
+//        dataSet.setColors(ColorTemplate.VORDIPLOM_COLORS);
+//        // barChart.setBackgroundColor(rgb(68, 112, 85));
+//        barChart.setData(data);
+//        barChart.setVisibleXRangeMaximum(4);
+//     //   barChart.setDescription("Rate of Products");
+//        //  barChart.animateX(2000);
+//        barChart.animateXY(2000,2000);
+//    }
+//    void drawPieChart()
+//    {
+//        ArrayList<Entry> PieEntry = new ArrayList<>();
+//        PieDataSet dataSet = new PieDataSet(PieEntry, "Products");
+//        //    dataSet.setBarSpacePercent(50);
+//
+//        for(int i=0;i<pricelist.size();i++){
+//            PieEntry.add(new Entry(Float.valueOf(String.valueOf(pricelist.get(i))), i));
+//            arrayList.add(arrayList.get(i));
+//        }
+//
+//        PieData data = new PieData(arrayList,dataSet);
+//        dataSet.setColors(ColorTemplate.VORDIPLOM_COLORS);
+//        // barChart.setBackgroundColor(rgb(68, 112, 85));
+//        pieChart.setData(data);
+//      //  pieChart.setDescription("Rate of Products");
+//        //  barChart.animateX(2000);
+//        pieChart.animateXY(2000,2000);
+//
+//    }
 
 //    void drawLinechart()
 //    {

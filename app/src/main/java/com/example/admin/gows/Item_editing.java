@@ -7,21 +7,16 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.text.Editable;
 import android.text.InputFilter;
 import android.text.Spanned;
-import android.text.TextWatcher;
 import android.text.method.DigitsKeyListener;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -30,12 +25,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ImageButton;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.ScrollView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,24 +51,21 @@ public class Item_editing extends Fragment{
     EditText item_name,item_hsc,item_rate;
     TextView enable_status,total_price,price;
     CheckBox item_edit_favour;
-    String[] cat,it_type,tt;
+    String[] it_type,tt;
     String itemtype,catspin,catg,taxes,enable,favour,tax1,tax2,tax3,tax4,
-           name,c_code,category_code_save;
+            name,c_code,category_code_save;
     Button item_edit_save,item_edit_enable;
     List<String> lables,tax;
     Float quan;
-    Float ra=0.0f;
     List<String> list,type;
-    TextWatcher textWatcher;
-    String item_code,ll;
+    String item_code;
     int Fav_count;
     AlertDialog.Builder mBuilder;
     String[] listItems;// = {"arun","shankar","karthi","keyan","manda","panda","jhandhu","java","visakirumi"};
     boolean[] checkedItems;
     ArrayList<Integer> mUserItems = new ArrayList<>();
-    ArrayList<String> tax_list = new ArrayList<String>();
-    TextView tax_edit_textview;
-    ImageButton imageButton;
+    ArrayList<String> tax_list = new ArrayList<>();
+    Button taxButton;
     List<String> list_name;
     String percent;
     String gg,item1;
@@ -98,13 +85,16 @@ public class Item_editing extends Fragment{
         db = getActivity().openOrCreateDatabase("Master.db", MODE_PRIVATE ,null);
 
         db.execSQL("create table if not exists Item (Item_Code integer primary key autoincrement ,Item_Name text ," +
-                "Category_Code int,Item_Type varchar,Tax1 varchar,Tax2 varchar,Tax3 varchar,Tax4 varchar,Rate float," +
-                "HSNcode varchar(50),Total_Price float,Tax_Price float,Created_date Date,Created_time time,Enable int,Favour int,Tax_Percent float);");
-       db.execSQL("create table if not exists Category (Category_Code Integer primary key autoincrement ,Name Varchar,Created_date Date,Created_time Time,Enable int)");
-         db.execSQL("create table if not exists Taxes(Name text,Percentage varchar)");
+                "Category_Code int,Item_Type varchar,Taxes varchar,Rate float," +"HSNcode varchar(50),Total_Price float,Tax_Price float,Created_date Date,Created_time time,Enable int,Favour int,Tax_Percent float);");
+
+//        db.execSQL("create table if not exists Item (Item_Code integer primary key autoincrement ,Item_Name text ," +
+//                "Category_Code int,Item_Type varchar,Tax1 varchar,Tax2 varchar,Tax3 varchar,Tax4 varchar,Rate float," +
+//                "HSNcode varchar(50),Total_Price float,Tax_Price float,Created_date Date,Created_time time,Enable int,Favour int,Tax_Percent float);");
+        db.execSQL("create table if not exists Category (Category_Code Integer primary key autoincrement ,Name Varchar,Created_date Date,Created_time Time,Enable int)");
+        db.execSQL("create table if not exists Taxes(Name text,Percentage varchar)");
 
         // Date & Time
-        @SuppressLint("SimpleDateFormat") final String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+        @SuppressLint("SimpleDateFormat") final String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         Calendar calendar = Calendar.getInstance();
         @SuppressLint("SimpleDateFormat") SimpleDateFormat mdformat = new SimpleDateFormat("HH:mm:ss");
         final String time = mdformat.format(calendar.getTime());
@@ -113,9 +103,8 @@ public class Item_editing extends Fragment{
         item_select=view.findViewById(R.id.item_select);
         item_category=view.findViewById(R.id.item_category_edit_spinner);
         item_type_edit=view.findViewById(R.id.itemetype_edit_spinner);
-        tax_edit_textview= view.findViewById(R.id.tax_edit_textview);
         //ImageButton
-        imageButton = view.findViewById(R.id.tax_spin_image_button);
+        taxButton = view.findViewById(R.id.tax_spin_button);
         //Edittext
         item_name = view.findViewById(R.id.item_edit_name);
         enable_status = view.findViewById(R.id.enable_status);
@@ -184,6 +173,12 @@ public class Item_editing extends Fragment{
             }
         });
 
+        getTax_List();
+        listItems = new String[tax_list.size()];
+        for (int kg = 0; kg < tax_list.size(); kg++) {
+            listItems[kg] = String.valueOf(tax_list.get(kg));
+        }
+        checkedItems = new boolean[listItems.length];
         type = getItem();
         ArrayAdapter<String> typeAdapter1 = new ArrayAdapter<String>(getActivity(),R.layout.spinner_items, type);
         typeAdapter1.setDropDownViewResource(R.layout.spinner_items);
@@ -193,7 +188,7 @@ public class Item_editing extends Fragment{
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 tt = new String[]{};//, tax2,tax3,tax4};
-                list = new ArrayList<String>(Arrays.asList(tt));
+                list = new ArrayList<>(Arrays.asList(tt));
                 tt = list.toArray(new String[0]);
                 String it_name = adapterView.getItemAtPosition(i).toString();
                 String selectedQuery1 = "SELECT Item_Code FROM Item where  Item_Name='"+it_name+"'";
@@ -212,12 +207,10 @@ public class Item_editing extends Fragment{
                     String cat_code = cursor.getString(2);
                     String ite = cursor.getString(3);
                     tax1 = cursor.getString(4);
-                    tax2 = cursor.getString(5);
-                    tax3 = cursor.getString(6);
-                    tax4 = cursor.getString(7);
-                    tax_edit_textview.setText(tax1);
-                    Toast.makeText(getActivity(), "t: "+tax1, Toast.LENGTH_SHORT).show();
-                 //   retrieveTaxVaalues();
+                    taxButton.setText(tax1);
+
+                    //    Toast.makeText(getActivity(), "t: "+tax1, Toast.LENGTH_SHORT).show();
+                    //   retrieveTaxVaalues();
                     String selectQuery1 = "SELECT  Name FROM Category where  Category_Code='"+cat_code+"'";
                     Cursor cursor1 = db.rawQuery(selectQuery1, null);
                     if (cursor1.moveToFirst()) {
@@ -256,18 +249,18 @@ public class Item_editing extends Fragment{
 //                    }
 
 //                    Float rate = cursor.getFloat(8);
-                    String rate = cursor.getString(8);
-                    String hsn = cursor.getString(9);
-                    String total_price = cursor.getString(10);
+                    String rate = cursor.getString(5);
+                    String hsn = cursor.getString(6);
+                    String total_price = cursor.getString(7);
 //                    Float total = Float.valueOf(total_price);
                     String tot = String.format("%.2f",Float.valueOf(total_price));
                     //   String tot = String.format("%.2f", t_p);
-                    String tax_price = cursor.getString(11);
+                    String tax_price = cursor.getString(8);
                     String tot1 = String.format("%.2f",Float.valueOf(tax_price));
-                    String ena = cursor.getString(14);
-                    String fav = cursor.getString(15);
-                    String per = cursor.getString(16);
-                    Toast.makeText(getActivity(), "Percent: "+tax_price, Toast.LENGTH_SHORT).show();
+                    String ena = cursor.getString(11);
+                    String fav = cursor.getString(12);
+                    String per = cursor.getString(13);
+                    //    Toast.makeText(getActivity(), "Percent: "+tax_price, Toast.LENGTH_SHORT).show();
 
                     item_name.setText(name);
                     item_name.setSelectAllOnFocus(true);
@@ -368,15 +361,26 @@ public class Item_editing extends Fragment{
 //                }
 //            }
 //        });
-        getTax_List();
-        listItems = new String[tax_list.size()];
-        for (int kg = 0; kg < tax_list.size(); kg++) {
-            listItems[kg] = String.valueOf(tax_list.get(kg));
-        }
-        checkedItems = new boolean[listItems.length];
-        imageButton.setOnClickListener(new View.OnClickListener() {
+//        CommonFunctions os = new CommonFunctions();
+//        os.getTax_common();
+
+
+        taxButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                String text = taxButton.getText().toString();
+                String[] tt = text.split(",");
+
+                //    Toast.makeText(getContext(), "text :"+tt.toString(), Toast.LENGTH_SHORT).show();
+//                getTax_List();
+//                listItems = new String[tax_list.size()];
+//                for (int kg = 0; kg < tax_list.size(); kg++) {
+//                    listItems[kg] = String.valueOf(tax_list.get(kg));
+//                }
+//                checkedItems = new boolean[listItems.length];
+
+                //  checked();
                 InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
@@ -385,7 +389,9 @@ public class Item_editing extends Fragment{
                 mBuilder.setMultiChoiceItems(listItems, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int position, boolean isChecked) {
+
                         if (isChecked) {
+                            //  checkedItems[position] = isChecked;
                             // If user select a item then add it in selected items
                             mUserItems.add(position);
                             list_name = Arrays.asList(listItems[position]);
@@ -405,8 +411,12 @@ public class Item_editing extends Fragment{
                             Float calc1 = (total + c);
                             ItemActivity.price.setText(String.valueOf(calc1));
                         } else if (mUserItems.contains(position)) {
+//                            isChecked = true;
+//                            Toast.makeText(getContext(), "dialog: "+isChecked, Toast.LENGTH_SHORT).show();
+//                            for(int i =0; i<mUserItems.size(); i++){
+//                            }
+                            // Toast.makeText(getContext(), "checked: "+isChecked, Toast.LENGTH_SHORT).show();
                             // if the item is already selected then remove it
-
                             list_name = Arrays.asList(listItems[position]);
                             gg = listItems[position].toString();
                             reverseCalc();
@@ -448,10 +458,10 @@ public class Item_editing extends Fragment{
 
                         }
                         if(item1.isEmpty()){
-                            tax_edit_textview.setText("select tax");
+                            taxButton.setText("select tax");
                         }
                         else {
-                            tax_edit_textview.setText(item1);
+                            taxButton.setText(item1);
                         }
                     }
                 });
@@ -466,26 +476,25 @@ public class Item_editing extends Fragment{
                             }
                         }
                         if(item1.isEmpty()){
-                            tax_edit_textview.setText("select tax");
+                            taxButton.setText("select tax");
                         }
                         else {
-                            tax_edit_textview.setText(item1);
+                            taxButton.setText(item1);
                         }
                         dialogInterface.dismiss();
                     }
                 });
                 AlertDialog mDialog = mBuilder.create();
                 mDialog.show();
-
             }
         });
 
-        tax_edit_textview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
+//        taxButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
         item_edit_enable.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 if(enable.equals("1")){
@@ -568,8 +577,8 @@ public class Item_editing extends Fragment{
                     values.put("Created_time", time);
                     values.put("Enable", enable);
                     values.put("Favour", favour);
-                    String tx = tax_edit_textview.getText().toString();
-                    values.put("Tax1",tx);
+                    String tx = taxButton.getText().toString();
+                    values.put("Taxes",tx);
                     if (rowIdExists(item_code)) {
 //                        getFav();
 //                        if((Fav_count>12) && (item_edit_favour.isChecked()))
@@ -580,7 +589,7 @@ public class Item_editing extends Fragment{
 //                        }
 //                        else {
                         db.update("Item", values, "Item_Code ='" + item_code + "'", null);
-                        Toast.makeText(getContext(), "tax1: "+tax1, Toast.LENGTH_SHORT).show();
+                     //   Toast.makeText(getContext(), "tax1: "+tax1, Toast.LENGTH_SHORT).show();
                         final AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
                         alertDialog.setMessage("Your item" + "" + item_code + " has been Updated");
                         alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
@@ -752,6 +761,7 @@ public class Item_editing extends Fragment{
         }
     }
     public void getTax_List(){
+        tax_list.clear();
         String selectQuery = "SELECT * FROM Taxes";
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
@@ -798,13 +808,22 @@ public class Item_editing extends Fragment{
             }while (c.moveToNext());
         }
     }
-
-    private void retrieveTaxVaalues(){
-        Toast.makeText(getActivity(), "name and tax1:"+tax1+name, Toast.LENGTH_SHORT).show();
-        String[] tax = tax1.split(" ");
-        String ta = tax[0].trim().toString();
-        Toast.makeText(getActivity(), "tax split:"+ta, Toast.LENGTH_SHORT).show();
-    }
+    private  void checked(){
+        String text = taxButton.getText().toString();
+        ArrayList arrayList = new ArrayList();
+        arrayList.add(listItems);
+        String strArray[] = text. split(",");
+        for(int i=0; i < strArray. length; i++) {
+            //   Toast.makeText(getContext(), "strarray: " + strArray[i] + " "+arrayList.toArray(listItems), Toast.LENGTH_SHORT).show();
+            if(arrayList.contains("gst")){
+                String gg = checkedItems.toString();
+                Toast.makeText(getActivity(), "gg: "+gg, Toast.LENGTH_SHORT).show();
+            }
+//            if(listItems.equals(strArray[i])){
+//                String gg = checkedItems.toString();
+//                Toast.makeText(getActivity(), "gg: "+gg, Toast.LENGTH_SHORT).show();
+//            }
+        }}
     public boolean getProduct() {
         String select = "select Product from Billing where Product ='"+name+"'";
         Cursor cursor = db.rawQuery(select, null);

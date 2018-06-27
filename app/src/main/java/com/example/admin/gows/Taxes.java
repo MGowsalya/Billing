@@ -3,6 +3,7 @@ package com.example.admin.gows;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -40,6 +41,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 /**
  * Created by ADMIN on 1/17/2018.
  */
@@ -53,6 +56,7 @@ public class Taxes extends Fragment {
     EditText name,percent;
     Button add;//edit;
     SQLiteDatabase db;
+    String names = "tax",concat;
 
     private static final String JSON_URL = "http://192.168.0.112/projects/samp/dummy.php";
     @Nullable
@@ -64,6 +68,8 @@ public class Taxes extends Fragment {
         name = view.findViewById(R.id.tax_name);
         percent = view.findViewById(R.id.tax_percent);
         add = view.findViewById(R.id.tax_add);
+        insert();
+
         // edit = view.findViewById(R.id.tax_button_edit);
 //        listView_name = view.findViewById(R.id.listview);
 //        listView_percent = view.findViewById(R.id.listview2);
@@ -115,29 +121,33 @@ public class Taxes extends Fragment {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                String table = "Billtype";
-//                db.execSQL("drop table if exists "+table);
 
-                File sd = Environment.getExternalStorageDirectory();
-                File data = Environment.getDataDirectory();
-                FileChannel source = null;
-                FileChannel destination = null;
-                String currentDBPath = "/data/" + "com.example.admin.gows" + "/databases/" + "Master.db";
-                String backupDBPath = "BillDemo.db";
-                File currentDB = new File(data, currentDBPath);
-                // File currentDB1 = new File(data,currentDBPath);
-                // File currentDB! = new File(data,currentDBPath);
-                File backupDB = new File(sd, backupDBPath);
-                try {
-                    source = new FileInputStream(currentDB).getChannel();
-                    destination = new FileOutputStream(backupDB).getChannel();
-                    destination.transferFrom(source, 0, source.size());
-                    source.close();
-                    destination.close();
-                    Toast.makeText(getContext(), "DB Exported!", Toast.LENGTH_LONG).show();
-                    } catch (IOException e) {
-                    e.printStackTrace();
-                    }
+//                Default_values df = new Default_values();
+//                df.insert_tax();
+//                String table = "Item";
+//                db.execSQL("drop table if exists "+table);
+//                Toast.makeText(getContext(), "deleted!", Toast.LENGTH_SHORT).show();
+
+//                File sd = Environment.getExternalStorageDirectory();
+//                File data = Environment.getDataDirectory();
+//                FileChannel source = null;
+//                FileChannel destination = null;
+//                String currentDBPath = "/data/" + "com.example.admin.gows" + "/databases/" + "Master.db";
+//                String backupDBPath = "BillDemo.db";
+//                File currentDB = new File(data, currentDBPath);
+//                // File currentDB1 = new File(data,currentDBPath);
+//                // File currentDB! = new File(data,currentDBPath);
+//                File backupDB = new File(sd, backupDBPath);
+//                try {
+//                    source = new FileInputStream(currentDB).getChannel();
+//                    destination = new FileOutputStream(backupDB).getChannel();
+//                    destination.transferFrom(source, 0, source.size());
+//                    source.close();
+//                    destination.close();
+//                    Toast.makeText(getContext(), "DB Exported!", Toast.LENGTH_LONG).show();
+//                    } catch (IOException e) {
+//                    e.printStackTrace();
+//                    }
 
                 String nam = name.getText().toString();
                 String per = percent.getText().toString();
@@ -168,7 +178,7 @@ public class Taxes extends Fragment {
                         Toast.makeText(getContext(), "Percentage should be between 1 to 100..", Toast.LENGTH_SHORT).show();
 
                     }
-                    GetValues();
+                    //   GetValues();
                 }
                 else
 
@@ -206,44 +216,64 @@ public class Taxes extends Fragment {
         return allMatch;
     }
 
-    private void GetValues() {
-        RequestQueue queue = Volley.newRequestQueue(getContext().getApplicationContext());
-        Log.e("URL", JSON_URL);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, JSON_URL, new com.android.volley.Response.Listener<String>() {
+    //    private void GetValues() {
+//        RequestQueue queue = Volley.newRequestQueue(getContext().getApplicationContext());
+//        Log.e("URL", JSON_URL);
+//        StringRequest stringRequest = new StringRequest(Request.Method.POST, JSON_URL, new com.android.volley.Response.Listener<String>() {
+//
+//            @Override
+//            public void onResponse(String response) {
+//                try {
+//                    JSONObject jsonObject = new JSONObject(response);
+//                    Log.e("Json_Response", jsonObject.toString());
+//                    Toast.makeText(getContext(), jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }, new com.android.volley.Response.ErrorListener()
+//
+//        {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Toast.makeText(getContext().getApplicationContext(), "That didn't work :(", Toast.LENGTH_SHORT).show();
+//            }
+//        })
+//
+//        {
+//            //adding parameters to the request
+//            @Override
+//            protected Map<String, String> getParams() throws AuthFailureError {
+//                Map<String, String> params = new HashMap<>();
+//
+//                params.put("Name", String.valueOf(name));
+//                params.put("Percentage", percent.getText().toString());
+//                Log.e("Params", params.toString());
+//                return params;
+//            }
+//        };
+//        // Add the request to the RequestQueue.
+//        queue.add(stringRequest);
+//    }
+    private void insert(){
 
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    Log.e("Json_Response", jsonObject.toString());
-                    Toast.makeText(getContext(), jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+        for (int n = 0; n < 5; n++) {
+            concat = names + n;
+            //   Toast.makeText(getApplicationContext(), "name:" + concat, Toast.LENGTH_SHORT).show();
+            int percent = 2;
+            //    Toast.makeText(getApplicationContext(), "percent:" + percent, Toast.LENGTH_SHORT).show();
+            ContentValues cv = new ContentValues();
+            cv.put("Name", concat);
+            cv.put("Percentage", percent);
+            if(rowIdExists(concat)) {
+                db.insert("Taxes", null, cv);
             }
-        }, new com.android.volley.Response.ErrorListener()
-
-        {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext().getApplicationContext(), "That didn't work :(", Toast.LENGTH_SHORT).show();
+            else {
+                //  Toast.makeText(getContext(), "Tax Name Already Used", Toast.LENGTH_SHORT).show();
             }
-        })
+        }
 
-        {
-            //adding parameters to the request
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
 
-                params.put("Name", String.valueOf(name));
-                params.put("Percentage", percent.getText().toString());
-                Log.e("Params", params.toString());
-                return params;
-            }
-        };
-        // Add the request to the RequestQueue.
-        queue.add(stringRequest);
     }
 
 }

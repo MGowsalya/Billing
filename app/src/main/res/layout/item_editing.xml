@@ -114,29 +114,16 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="40dp">
-        <TextView
-            android:id="@+id/tax_edit_textview"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="13dp"
-            android:layout_marginRight="13dp"
-            android:hint="Tax"
-            android:layout_weight="1"
-            android:fontFamily="@font/segoeui"
-            android:backgroundTint="@color/Grey"
-            android:textSize="15sp"
-            />
-
-            <ImageButton
-                android:layout_weight="1"
-                android:id="@+id/tax_spin_image_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="13dp"
-                android:layout_gravity="right"
-                android:background="@null"
-                android:src="@drawable/down_arrow" />
+            <Button
+                android:id="@+id/tax_spin_button"
+                android:text="Select Tax"
+                android:layout_gravity="center"
+                android:fontFamily="@font/segoeui"
+                android:textSize="15sp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <android.support.design.widget.TextInputLayout
