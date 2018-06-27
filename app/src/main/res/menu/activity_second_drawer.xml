@@ -9,13 +9,14 @@
             android:title="DashBoard" />
         <item
             android:id="@+id/nav_category"
-            android:title="Category" />
+            android:title="Item Category" />
+        <item
+            android:id="@+id/nav_item"
+            android:title="Items" />
         <item
             android:id="@+id/nav_tax"
             android:title="Taxes" />
-        <item
-            android:id="@+id/nav_item"
-            android:title="Item" />
+
         <item
             android:id="@+id/nav_bill"
             android:title="Billing" />
