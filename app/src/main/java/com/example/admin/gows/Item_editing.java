@@ -31,12 +31,15 @@ import android.widget.Toast;
 
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
+import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -61,7 +64,7 @@ public class Item_editing extends Fragment{
     String item_code;
     int Fav_count;
     AlertDialog.Builder mBuilder;
-    String[] listItems;// = {"arun","shankar","karthi","keyan","manda","panda","jhandhu","java","visakirumi"};
+    String[] listItems;
     boolean[] checkedItems;
     ArrayList<Integer> mUserItems = new ArrayList<>();
     ArrayList<String> tax_list = new ArrayList<>();
@@ -178,7 +181,7 @@ public class Item_editing extends Fragment{
         for (int kg = 0; kg < tax_list.size(); kg++) {
             listItems[kg] = String.valueOf(tax_list.get(kg));
         }
-        checkedItems = new boolean[listItems.length];
+
         type = getItem();
         ArrayAdapter<String> typeAdapter1 = new ArrayAdapter<String>(getActivity(),R.layout.spinner_items, type);
         typeAdapter1.setDropDownViewResource(R.layout.spinner_items);
@@ -208,6 +211,30 @@ public class Item_editing extends Fragment{
                     String ite = cursor.getString(3);
                     tax1 = cursor.getString(4);
                     taxButton.setText(tax1);
+                    checkedItems = new boolean[listItems.length];
+                    String text = taxButton.getText().toString();
+                    String[] tt = text.split(",");
+
+                    HashSet<String> set = new HashSet<>();
+
+                    for (int c = 0; c < listItems.length; c++)
+                    {
+                        for (int j = 0; j < tt.length; j++)
+                        {
+                            //  Toast.makeText(getActivity(), "tt.."+tt[j], Toast.LENGTH_SHORT).show();
+                            if(listItems[c].equalsIgnoreCase(tt[j]))
+                            {
+                                set.add(listItems[c]);
+                                checkedItems[c] = true;
+                                //  Toast.makeText(getActivity(), "satisfied", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                    System.out.println("list element : "+(Arrays.asList(listItems)));
+                    System.out.println("tt element : "+(Arrays.asList(tt)));
+                    System.out.println("Common element : "+(set));
+
+
 
                     //    Toast.makeText(getActivity(), "t: "+tax1, Toast.LENGTH_SHORT).show();
                     //   retrieveTaxVaalues();
@@ -361,17 +388,70 @@ public class Item_editing extends Fragment{
 //                }
 //            }
 //        });
-//        CommonFunctions os = new CommonFunctions();
-//        os.getTax_common();
-
-
         taxButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                String text = taxButton.getText().toString();
-                String[] tt = text.split(",");
 
+//                String text = taxButton.getText().toString();
+//                String[] tt = text.split(",");
+//
+//                HashSet<String> set = new HashSet<>();
+//
+//                for (int i = 0; i < listItems.length; i++)
+//                {
+//                    for (int j = 0; j < tt.length; j++)
+//                    {
+//                        if(listItems[i].equalsIgnoreCase(tt[j]))
+//                        {
+//                            set.add(listItems[i]);
+//                            checkedItems[i] = true;
+//                        }
+//                    }
+//                }
+                // return common elements.
+//                System.out.println("list element : "+(Arrays.asList(listItems)));
+//                System.out.println("tt element : "+(Arrays.asList(tt)));
+//                System.out.println("Common element : "+(set));
+//                boolean compare = Arrays.equals(listItems,tt);
+//
+//                Toast.makeText(getContext(), "compare.."+compare, Toast.LENGTH_SHORT).show();
+                int k1=Math.max(listItems.length,tt.length);
+//                        Log.e("listItems","list: "+Arrays.toString(listItems));
+//                        Log.e("listItems","check: "+Arrays.toString(checkedItems));
+//                        if(!listItems.equals(t)){
+//                            Log.e("listItems","list: "+Arrays.toString(listItems));
+//                            Toast.makeText(getContext(), "success!!"+position, Toast.LENGTH_SHORT).show();
+//                        }
+
+//                for(int k=0;k<listItems.length;k++){
+//                    if(listItems[k].equalsIgnoreCase(tt[0])){
+//                        checkedItems[k] = true;
+//                        Toast.makeText(getContext(), "succeeded..", Toast.LENGTH_SHORT).show();
+//                        for(int kk=0;kk<listItems.length;kk++){
+//                            if(listItems[kk].equalsIgnoreCase(tt[1])){
+//                                checkedItems[kk] = true;
+//                                Toast.makeText(getContext(), "succeeded1..", Toast.LENGTH_SHORT).show();
+//                            }
+//                        }
+//                    }
+//                }
+//                Toast.makeText(getContext(), "tt.."+tt[1].toString(), Toast.LENGTH_SHORT).show();
+//                for(int kk=0;kk<listItems.length;kk++){
+//                    if(listItems[kk].equals(tt[1])){
+//                        checkedItems[kk] = true;
+//                        Toast.makeText(getContext(), "succeeded1..", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//                for(int i=0;i<5;i++){
+//                    if(listItems[i].contains(tt[k])){
+//                        checkedItems[i] = true;
+//                        Log.e("listItems","check: "+Arrays.toString(checkedItems));
+//                        Toast.makeText(getContext(), "contains.."+i, Toast.LENGTH_SHORT).show();
+//                        ++k;
+//                    }
+//                }
+                //
                 //    Toast.makeText(getContext(), "text :"+tt.toString(), Toast.LENGTH_SHORT).show();
 //                getTax_List();
 //                listItems = new String[tax_list.size()];
@@ -383,12 +463,19 @@ public class Item_editing extends Fragment{
                 //  checked();
                 InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-
                 mBuilder = new AlertDialog.Builder(getContext());
                 mBuilder.setTitle("taxes");
                 mBuilder.setMultiChoiceItems(listItems, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int position, boolean isChecked) {
+
+//                        if(listItems[position].contains(t))
+//                        {
+//                            checkedItems[2] = true;
+//                            Log.e("listItems","check: "+Arrays.toString(checkedItems));
+//                            Toast.makeText(getContext(), "yes!!"+Arrays.toString(tt), Toast.LENGTH_SHORT).show();
+//
+//                        }
 
                         if (isChecked) {
                             //  checkedItems[position] = isChecked;
@@ -453,7 +540,7 @@ public class Item_editing extends Fragment{
                         for(int i=0; i<mUserItems.size(); i++){
                             item1 = item1 + listItems[mUserItems.get(i)];
                             if(i != mUserItems.size() -1){
-                                item1 = item1 + ", ";
+                                item1 = item1 + ",";
                             }
 
                         }
@@ -472,7 +559,7 @@ public class Item_editing extends Fragment{
                         for(int i=0; i<mUserItems.size(); i++){
                             item1 = item1 + listItems[mUserItems.get(i)];
                             if(i != mUserItems.size() -1){
-                                item1 = item1 + ", ";
+                                item1 = item1 + ",";
                             }
                         }
                         if(item1.isEmpty()){
@@ -589,7 +676,7 @@ public class Item_editing extends Fragment{
 //                        }
 //                        else {
                         db.update("Item", values, "Item_Code ='" + item_code + "'", null);
-                     //   Toast.makeText(getContext(), "tax1: "+tax1, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "tax1: "+tax1, Toast.LENGTH_SHORT).show();
                         final AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
                         alertDialog.setMessage("Your item" + "" + item_code + " has been Updated");
                         alertDialog.setButton("OK", new DialogInterface.OnClickListener() {

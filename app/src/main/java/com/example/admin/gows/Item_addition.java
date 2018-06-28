@@ -171,7 +171,7 @@ public class Item_addition extends Fragment {
                         for (int i = 0; i < mUserItems.size(); i++) {
                             item1 = item1 + listItems[mUserItems.get(i)];
                             if (i != mUserItems.size() - 1) {
-                                item1 = item1 + ", ";
+                                item1 = item1 + ",";
                             }
 
                         }
@@ -189,7 +189,7 @@ public class Item_addition extends Fragment {
                         for (int i = 0; i < mUserItems.size(); i++) {
                             item1 = item1 + listItems[mUserItems.get(i)];
                             if (i != mUserItems.size() - 1) {
-                                item1 = item1 + ", ";
+                                item1 = item1 + ",";
                             }
                         }
                         if (item1.isEmpty()) {
