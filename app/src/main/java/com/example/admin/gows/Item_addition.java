@@ -92,7 +92,7 @@ public class Item_addition extends Fragment {
         Calendar calendar = Calendar.getInstance();
         @SuppressLint("SimpleDateFormat") SimpleDateFormat mdformat = new SimpleDateFormat("HH:mm:ss");
         time = mdformat.format(calendar.getTime());
-   //     insert();
+        insert();
 
         ok_button = view.findViewById(R.id.tax_add_ok_button_id);
         getTax_List();
@@ -538,63 +538,65 @@ public class Item_addition extends Fragment {
         }
         return allMatch;
     }
-//    private void insert(){
-//        String cat_code = "1";
-//        String type = "Pieces";
-//        String tax = "gst,cgst";
-//        String tax1 = "tax1,tax2";
-//        String rate = "200";
-//        String hsn = "36";
-//        String total = "208";
-//        String favor = "1";
-//        for(int n=0; n<5; n++){
-//            concat = names + n;
-//            ContentValues values =new ContentValues();
-//            values.put("Item_Name", concat);
-//            values.put("Category_Code", cat_code);
-//            values.put("Item_Type", type);
-//            values.put("Taxes", tax);
-//            values.put("Rate", rate);
-//            values.put("Hsncode", hsn);
-//            values.put("Total_Price", total);
-//            values.put("Tax_Price", 8);
-//            values.put("Created_date", "2018-05-02");
-//            values.put("Created_time",time );
-//            values.put("Enable", enable);
-//            values.put("Favour", favor);
-//            values.put("Tax_Percent", total_tax);
-//            if(rowIdExists(concat)){
-//                db.insert("Item",null,values);
-//            }
-//            else {
-//                //  Toast.makeText(getContext(), "exists..", Toast.LENGTH_SHORT).show();
-//            }
-//        }
-//
-//        for(int i=5; i<10; i++){
-//            concat = names + i;
-//            ContentValues values =new ContentValues();
-//            values.put("Item_Name", concat);
-//            values.put("Category_Code", 2);
-//            values.put("Item_Type", "None");
-//            values.put("Taxes", tax1);
-//            values.put("Rate", 300);
-//            values.put("Hsncode", hsn);
-//            values.put("Total_Price", 312);
-//            values.put("Tax_Price", 12);
-//            values.put("Created_date", "2018-05-05");
-//            values.put("Created_time",time );
-//            values.put("Enable", enable);
-//            values.put("Favour", favor);
-//            values.put("Tax_Percent", 3);
-//            if(rowIdExists(concat)){
-//                db.insert("Item",null,values);
-//            }
-//            else {
-//                //  Toast.makeText(getContext(), "exists..", Toast.LENGTH_SHORT).show();
-//            }
-//        }
-//    }
+  private void insert(){
+        String cat_code = "1";
+        String type = "Pieces";
+        String tax1 = "tax1,tax2";
+        String tax2 = "tax3,tax4";
+        String rate = "200";
+        String hsn = "13.0606";
+        String hsn1 = "72.02.01";
+        String total = "208";
+        String favor = "1";
+        String tax_percent = "4.0";
+        for(int n=0; n<5; n++){
+            concat = names + n;
+            ContentValues values =new ContentValues();
+            values.put("Item_Name", concat);
+            values.put("Category_Code", cat_code);
+            values.put("Item_Type", type);
+            values.put("Taxes", tax1);
+            values.put("Rate", rate);
+            values.put("Hsncode", hsn1);
+            values.put("Total_Price", total);
+            values.put("Tax_Price", 8);
+            values.put("Created_date", "2018-05-02");
+            values.put("Created_time",time );
+            values.put("Enable", enable);
+            values.put("Favour", favor);
+            values.put("Tax_Percent", tax_percent);
+            if(rowIdExists(concat)){
+                db.insert("Item",null,values);
+            }
+            else {
+              //  Toast.makeText(getContext(), "exists..", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        for(int i=5; i<10; i++){
+            concat = names + i;
+            ContentValues values =new ContentValues();
+            values.put("Item_Name", concat);
+            values.put("Category_Code", 2);
+            values.put("Item_Type", "None");
+            values.put("Taxes", tax2);
+            values.put("Rate", 300);
+            values.put("Hsncode", hsn);
+            values.put("Total_Price", 312);
+            values.put("Tax_Price", 12);
+            values.put("Created_date", "2018-05-05");
+            values.put("Created_time",time );
+            values.put("Enable", enable);
+            values.put("Favour", favor);
+            values.put("Tax_Percent", tax_percent);
+            if(rowIdExists(concat)){
+                db.insert("Item",null,values);
+            }
+            else {
+                //  Toast.makeText(getContext(), "exists..", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 
 }
 //    void taxPercent()
